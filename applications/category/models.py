@@ -9,9 +9,9 @@ class Category(models.Model):
 
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='children', blank=True, null=True)
 
-    def save(self, *agrs, **kwargs):
+    def save(self, *args, **kwargs):
         self.slug = slug_generator_title(self.title)
-        super(Category, self.save(args, kwargs))
+        super(Category, self).save(args, kwargs)
     
     def __str__(self) -> str:
         return self.title
