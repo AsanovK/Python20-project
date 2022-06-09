@@ -12,7 +12,7 @@ class OrderSerializer(serializers.ModelSerializer):
     delivery_address = serializers.CharField(max_length=255, required=True)
 
     class Meta:
-        models = Order
+        model = Order
         fields = ('items', 'total_cost', 'delivery_address', 'status')
 
     def create(self, validated_data):

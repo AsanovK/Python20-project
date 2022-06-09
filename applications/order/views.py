@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
-    serilizer_class = OrderSerializer
+    serializer_class = OrderSerializer
     permissions_classes = [IsAuthenticated, ]
 
     def get_serializer_context(self):
