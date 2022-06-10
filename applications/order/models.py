@@ -32,5 +32,5 @@ class OrderProduct(models.Model):
 
     def save(self, *args, **kwargs):
         self.total_cost = self.product.price * self.quantity
-        super(OrderProduct, self).save(args, kwargs)
+        super(OrderProduct, self).save(*args, **kwargs)
         

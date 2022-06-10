@@ -1,5 +1,10 @@
+
 from rest_framework import serializers
+
+from applications.review.serializers import ReviewSerializer
 from .models import Product, ProductImage
+from ..comment.models import Comment
+from ..comment.serializers import CommentSerializer
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -30,6 +35,15 @@ class ProductSerializer(serializers.ModelSerializer):
     def to_representation(self,instance):
         rep = super().to_representation(instance)
         rep['images'] = ProductImageSerializer(ProductImage.objects.filter(product=instance.id), many=True).data
+        rep['reviews'] = ReviewSerializer(instance.review.filter(product=instance.id), many=True).data
+        total_rating = [i.rating for i in instance.review.all()]
+        if len(total_rating) != 0:
+            rep['total_rating'] = sum(total_rating)/len(total_rating)
+        else:
+            rep['total_rating'] = ""
+        rep['comment'] = CommentSerializer(Comment.objects.filter(product_id=instance), many=True).data
         return rep
+
+
 
     

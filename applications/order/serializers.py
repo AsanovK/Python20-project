@@ -19,12 +19,12 @@ class OrderSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         items = validated_data.pop('items')
         if request.user.is_authenticated:
-            validated_data['user_id'] = request.user.id
+            validated_data['user'] = request.user
         order = Order.objects.create(**validated_data)
         total_order_cost = 0 
         for item in items:
             product = item['product']
-            order_product = OrderProduct.objects.creare(order=order, product=product, quantity=item['quantity'])
+            order_product = OrderProduct.objects.create(order=order, product=product, quantity=item['quantity'])
             total_order_cost += order_product.total_cost
             
         order.total_cost = total_order_cost
